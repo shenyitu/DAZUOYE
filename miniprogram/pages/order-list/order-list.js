@@ -97,6 +97,6 @@ Page({
 
   goDetail(e) {
     const id = e.currentTarget.dataset.id;
-    wx.showToast({ title: '详情页开发中', icon: 'none' });
+    wx.navigateTo({ url: `/pages/order-detail/order-detail?id=${id}` });
   },
 });

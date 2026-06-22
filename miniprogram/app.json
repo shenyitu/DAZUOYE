@@ -4,6 +4,8 @@
     "pages/home/home",
     "pages/dish-detail/dish-detail",
     "pages/order-list/order-list",
+    "pages/checkout/checkout",
+    "pages/order-detail/order-detail",
     "pages/cart/cart",
     "pages/user/user",
     "pages/index/index",

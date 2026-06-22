@@ -56,6 +56,7 @@ const FUNCTIONS = {
   DISHES: 'dishes',
   CART: 'cart',
   PLACE_ORDER: 'placeOrder',
+  PAY_ORDER: 'payOrder',
   CANCEL_ORDER: 'cancelOrder',
   VERIFY_PICKUP: 'verifyPickup',
   GET_CATEGORIES: 'getCategories',
