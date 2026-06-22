@@ -15,7 +15,7 @@ exports.main = async (event) => {
     case 'add': return addToCart(event);
     case 'update': return updateCart(event);
     case 'remove': return removeFromCart(event);
-    case 'clear': return clearCart();
+    case 'clear': return clearCart(event);
     default: return { success: false, message: '未知action: ' + action };
   }
 };
@@ -114,10 +114,18 @@ async function removeFromCart(event) {
 }
 
 // ---------- 清空购物车（下单后调用）----------
-async function clearCart() {
+async function clearCart(event) {
   const openid = cloud.getWXContext().OPENID;
+  const { dishIds } = event;
   try {
-    await db.collection('carts').where({ userId: openid }).remove();
+    if (dishIds && dishIds.length > 0) {
+      const { data } = await db.collection('carts')
+        .where({ userId: openid }).get();
+      const toRemove = data.filter(item => dishIds.includes(item.dishId));
+      for (const item of toRemove) {
+        await db.collection('carts').doc(item._id).remove();
+      }
+    }
     return { success: true };
   } catch (err) {
     return { success: false, message: err.message };

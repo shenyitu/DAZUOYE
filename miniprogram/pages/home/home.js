@@ -33,6 +33,7 @@ Page({
   onShow() {
     if (app.globalData.userInfo) {
       this.updateCartBadge();
+      this.updateOrderBadge();
     }
   },
 
@@ -254,6 +255,25 @@ Page({
       }
     } catch (err) {
       // 静默处理
+    }
+  },
+
+  // ==================== 更新订单角标 ====================
+  async updateOrderBadge() {
+    const openid = app.globalData.userInfo?.openid;
+    if (!openid) return;
+    try {
+      const db = wx.cloud.database();
+      const { total } = await db.collection('orders')
+        .where({ userId: openid, status: 'pending_pay' })
+        .count();
+      if (total > 0) {
+        wx.setTabBarBadge({ index: 1, text: total > 99 ? '99+' : String(total) });
+      } else {
+        wx.removeTabBarBadge({ index: 1 });
+      }
+    } catch (e) {
+      // 静默
     }
   }
 });
