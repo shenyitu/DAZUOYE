@@ -1,6 +1,9 @@
 // pages/home/home.js
 const app = getApp();
 
+const CACHE_KEY = 'home_cache';
+const CACHE_TTL = 5 * 60 * 1000; // 5分钟
+
 /** 格式化价格：分→元 */
 function fmt(c) { return (c / 100).toFixed(0); }
 function fmtDiscount(sale, orig) { return (sale / orig * 10).toFixed(1); }
@@ -27,6 +30,7 @@ Page({
   },
 
   onLoad() {
+    this.loadFromCache();
     this.loadCategories();
   },
 
@@ -73,6 +77,7 @@ Page({
         });
         // 加载第一个分类的菜品
         await this.loadDishes(true);
+        this.saveToCache();
       } else {
         // 分类数据为空（可能未初始化数据库）
         const errMsg = (res.result && res.result.message) || '分类数据为空，请先初始化数据库';
@@ -157,6 +162,7 @@ Page({
           isError: false,
           isLoading: false
         });
+        this.saveToCache();
       } else {
         const errMsg = (res.result && res.result.message) || '加载菜品失败';
         this.setData({
@@ -221,6 +227,36 @@ Page({
     } catch (err) {
       wx.showToast({ title: '操作失败', icon: 'error' });
     }
+  },
+
+  // ==================== 首页缓存 ====================
+  loadFromCache() {
+    try {
+      const cache = wx.getStorageSync(CACHE_KEY);
+      if (!cache) return;
+      const { categories, activeCategoryId, dishList, total, timestamp } = cache;
+      if (Date.now() - timestamp > CACHE_TTL) return;
+      this.setData({
+        categories,
+        activeCategoryId,
+        dishList,
+        total,
+        isLoading: false,
+        isEmpty: dishList.length === 0
+      });
+    } catch (e) { /* 静默 */ }
+  },
+
+  saveToCache() {
+    try {
+      wx.setStorageSync(CACHE_KEY, {
+        categories: this.data.categories,
+        activeCategoryId: this.data.activeCategoryId,
+        dishList: this.data.dishList,
+        total: this.data.total,
+        timestamp: Date.now()
+      });
+    } catch (e) { /* 静默 */ }
   },
 
   // ==================== 重试加载 ====================
