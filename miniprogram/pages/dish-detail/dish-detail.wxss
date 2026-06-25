@@ -223,13 +223,18 @@ page {
   left: 0;
   right: 0;
   background: #ffffff;
-  padding: 16rpx 24rpx;
-  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  padding: 12rpx 24rpx;
+  padding-bottom: calc(12rpx + env(safe-area-inset-bottom));
   display: flex;
-  align-items: center;
-  gap: 20rpx;
+  flex-direction: column;
+  gap: 12rpx;
   box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.04);
   z-index: 100;
+}
+
+.quantity-row {
+  display: flex;
+  justify-content: center;
 }
 
 .quantity-control {
@@ -268,13 +273,28 @@ page {
 }
 
 .action-buttons {
-  flex: 1;
   display: flex;
+  width: 100%;
   gap: 16rpx;
 }
 
-.btn-cart, .btn-buy {
+.btn-cart {
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  padding: 0;
+  border: 2rpx solid #ff6b35;
+  background: #fff5f0;
+  color: #ff6b35;
   flex: 1;
+}
+
+.btn-cart::after { border: none; }
+
+.btn-buy {
   height: 80rpx;
   line-height: 80rpx;
   border-radius: 40rpx;
@@ -283,19 +303,9 @@ page {
   text-align: center;
   padding: 0;
   border: none;
-}
-
-.btn-cart {
-  background: #fff5f0;
-  color: #ff6b35;
-  border: 2rpx solid #ff6b35;
-}
-
-.btn-cart::after { border: none; }
-
-.btn-buy {
   background: linear-gradient(135deg, #ff6b35, #ff8c5a);
   color: #ffffff;
+  flex: 1;
 }
 
 .btn-buy::after { border: none; }
@@ -305,4 +315,119 @@ page {
   background: #e0e0e0;
   color: #999999;
   border-color: #e0e0e0;
+}
+
+/* ===== 用户评价 ===== */
+.reviews-section {
+  background: #ffffff;
+  margin: 0 20rpx 16rpx;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+
+.review-count {
+  font-size: 24rpx;
+  color: #bbbbbb;
+  font-weight: 400;
+  margin-left: 8rpx;
+}
+
+.review-card {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.review-card:last-child {
+  border-bottom: none;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.review-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+
+.review-user-info {
+  flex: 1;
+}
+
+.review-nickname {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333333;
+  display: block;
+}
+
+.review-stars {
+  display: flex;
+  gap: 2rpx;
+  margin-top: 4rpx;
+}
+
+.review-stars .star {
+  font-size: 22rpx;
+  color: #e0e0e0;
+}
+
+.review-stars .star.active {
+  color: #ff9500;
+}
+
+.review-time {
+  font-size: 22rpx;
+  color: #bbbbbb;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.review-content {
+  margin-top: 14rpx;
+  padding: 14rpx 16rpx;
+  background: #fafafa;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  color: #555555;
+  line-height: 1.6;
+}
+
+.review-images {
+  display: flex;
+  gap: 10rpx;
+  margin-top: 14rpx;
+  flex-wrap: wrap;
+}
+
+.review-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 8rpx;
+  background: #f0f0f0;
+}
+
+/* 暂无评价 */
+.no-review {
+  background: #ffffff;
+  margin: 0 20rpx 16rpx;
+  border-radius: 16rpx;
+  padding: 60rpx 24rpx;
+  text-align: center;
+}
+
+.no-review-icon {
+  font-size: 60rpx;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.no-review-text {
+  font-size: 26rpx;
+  color: #bbbbbb;
 }
