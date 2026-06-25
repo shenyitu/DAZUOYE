@@ -124,21 +124,25 @@
   </view>
 
   <!-- 底部占位（给操作栏留空间） -->
-  <view style="height: 120rpx;"></view>
+  <view style="height: 180rpx;"></view>
 </view>
 
 <!-- 底部操作栏 -->
 <view wx:if="{{!isLoading && dish}}" class="bottom-bar">
-  <view class="quantity-control">
-    <view class="qc-btn {{quantity <= 1 ? 'disabled' : ''}}" bindtap="handleDecrease">
-      <text>-</text>
-    </view>
-    <view class="qc-number">{{quantity}}</view>
-    <view class="qc-btn {{!canAdd || quantity >= dish.stock ? 'disabled' : ''}}" bindtap="handleIncrease">
-      <text>+</text>
+  <!-- 计数器 -->
+  <view class="quantity-row">
+    <view class="quantity-control">
+      <view class="qc-btn {{quantity <= 1 ? 'disabled' : ''}}" bindtap="handleDecrease">
+        <text>-</text>
+      </view>
+      <view class="qc-number">{{quantity}}</view>
+      <view class="qc-btn {{!canAdd || quantity >= dish.stock ? 'disabled' : ''}}" bindtap="handleIncrease">
+        <text>+</text>
+      </view>
     </view>
   </view>
 
+  <!-- 操作按钮 -->
   <view class="action-buttons">
     <button class="btn-cart" bindtap="handleAddCart" disabled="{{!dish.isOnSale}}">
       {{dish.isOnSale ? '加入购物车' : '已下架'}}
